@@ -1,4 +1,8 @@
 streamlit
+scikit-learn
+numpy
+pandas
+requests
 langchain
 langchain-core
 langchain-community
