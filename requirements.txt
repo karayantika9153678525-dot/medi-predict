@@ -1,8 +1,5 @@
 streamlit
-scikit-learn==1.3.2
-numpy
+numpy==1.26.4
+scikit-learn==1.4.2
 pandas
 requests
-langchain
-langchain-core
-langchain-community
