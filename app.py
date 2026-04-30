@@ -311,11 +311,6 @@ with st.sidebar:
 
     st.success(f"Logged in as {st.session_state.username}")
 
-    if st.button("Logout"):
-        st.session_state.logged_in = False
-        st.session_state.username = ""
-        st.rerun()
-
     page = st.radio(
         "Navigation",
         [
@@ -334,6 +329,30 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
+    st.markdown("""
+    <style>
+    div.stButton > button {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        color: white !important;
+        border: none;
+        border-radius: 14px;
+        padding: 12px;
+        font-weight: 700;
+        box-shadow: 0px 8px 18px rgba(239, 68, 68, 0.35);
+        margin-top: 15px;
+    }
+
+    div.stButton > button:hover {
+        background: linear-gradient(135deg, #dc2626, #991b1b);
+        color: white !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    if st.button("🚪 Logout"):
+        st.session_state.logged_in = False
+        st.session_state.username = ""
+        st.rerun()
 # ---------- MAIN LAYOUT ----------
 left, right = st.columns([3.2, 1])
 
