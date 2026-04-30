@@ -7,7 +7,7 @@ import numpy as np
 import google.generativeai as genai
 
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-model = genai.GenerativeModel("gemini-2.5-flash")
+model = genai.GenerativeModel("gemini-pro")
 st.set_page_config(
     page_title="Multiple Disease Prediction System",
     page_icon="🩺",
@@ -543,8 +543,7 @@ User question: {user_msg}
                 bot_reply = response.text
 
             except Exception as e:
-                bot_reply = "AI not responding right now. Please try again."
-
+                bot_reply = f"AI error: {e}"    
             st.session_state.messages.append(("bot", bot_reply))
             st.rerun()
             # ---------- NEW LOCAL AI LOGIC ----------
