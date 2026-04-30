@@ -4,7 +4,10 @@ import sqlite3
 import hashlib
 import pickle
 import numpy as np
+import google.generativeai as genai
 
+genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+model = genai.GenerativeModel("gemini-pro")
 st.set_page_config(
     page_title="Multiple Disease Prediction System",
     page_icon="🩺",
@@ -353,6 +356,7 @@ with st.sidebar:
         st.session_state.logged_in = False
         st.session_state.username = ""
         st.rerun()
+
 # ---------- MAIN LAYOUT ----------
 left, right = st.columns([3.2, 1])
 
@@ -525,6 +529,24 @@ with right:
         if user_msg:
             st.session_state.messages.append(("user", user_msg))
 
+            try:
+                prompt = f"""
+You are an AI Health Assistant.
+Give only general health advice.
+Do not prescribe medicines.
+Advise the user to consult a doctor for serious symptoms or emergencies.
+Keep the answer simple and helpful.
+
+User question: {user_msg}
+"""
+                response = model.generate_content(prompt)
+                bot_reply = response.text
+
+            except Exception as e:
+                bot_reply = "AI not responding right now. Please try again."
+
+            st.session_state.messages.append(("bot", bot_reply))
+            st.rerun()
             # ---------- NEW LOCAL AI LOGIC ----------
             question = user_msg.lower()
 
