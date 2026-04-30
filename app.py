@@ -7,7 +7,7 @@ import numpy as np
 import google.generativeai as genai
 
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-model = genai.GenerativeModel("gemini-pro")
+model = genai.GenerativeModel("gemini-2.5-flash")
 st.set_page_config(
     page_title="Multiple Disease Prediction System",
     page_icon="🩺",
