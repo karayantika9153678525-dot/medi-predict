@@ -506,19 +506,62 @@ with right:
         if user_msg:
             st.session_state.messages.append(("user", user_msg))
 
-            try:
-                response = requests.post(
-                    "http://127.0.0.1:8001/chat",
-                    json={"question": user_msg}
+            # ---------- NEW LOCAL AI LOGIC ----------
+            question = user_msg.lower()
+
+            if "headache" in question:
+                bot_reply = (
+                    "💡 For headache:\n"
+                    "- Drink water 💧\n"
+                    "- Take rest 😴\n"
+                    "- Avoid screen 📱\n"
+                    "- Eat light food 🍲\n\n"
+                    "⚠️ If severe or frequent, consult a doctor."
                 )
 
-                if response.status_code == 200:
-                    bot_reply = response.json()["response"]
-                else:
-                    bot_reply = "Server error. Please check FastAPI."
+            elif "fever" in question:
+                bot_reply = (
+                    "🌡️ For fever:\n"
+                    "- Take rest 😴\n"
+                    "- Drink fluids 💧\n"
+                    "- Monitor temperature\n\n"
+                    "⚠️ If high fever >2 days, consult doctor."
+                )
 
-            except:
-                bot_reply = "FastAPI is not running. Start backend first."
+            elif "diabetes" in question:
+                bot_reply = (
+                    "🍬 Diabetes care:\n"
+                    "- Avoid sugar\n"
+                    "- Exercise daily 🏃‍♀️\n"
+                    "- Eat healthy diet 🥗\n"
+                    "- Monitor glucose regularly"
+                )
+
+            elif "heart" in question or "chest pain" in question:
+                bot_reply = (
+                    "❤️ Heart symptoms can be serious!\n"
+                    "⚠️ If chest pain, sweating, breathlessness → go to hospital immediately."
+                )
+
+            elif "diet" in question:
+                bot_reply = (
+                    "🥗 Healthy diet tips:\n"
+                    "- Eat fruits & vegetables\n"
+                    "- Avoid junk food\n"
+                    "- Drink water\n"
+                    "- Maintain balanced meals"
+                )
+
+            else:
+                bot_reply = (
+                    "🤖 I can help with:\n"
+                    "- Headache\n"
+                    "- Fever\n"
+                    "- Diabetes\n"
+                    "- Heart problems\n"
+                    "- Diet\n\n"
+                    "Ask me anything related to health!"
+                )
 
             st.session_state.messages.append(("bot", bot_reply))
             st.rerun()
